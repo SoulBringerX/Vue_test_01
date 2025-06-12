@@ -1,11 +1,11 @@
 <template>
   <div class="auth-container">
     <div v-if="isLogin" class="form-container">
-      <h2>Login</h2>
+      <h2 id="login">登录</h2>
       <form @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="login-email">Email:</label>
-          <input type="email" id="login-email" v-model="loginForm.email" required />
+          <label for="login-account">Account:</label>
+          <input type="text" id="login-account" v-model="loginForm.account" required />
         </div>
         <div class="form-group">
           <label for="login-password">Password:</label>
@@ -13,19 +13,19 @@
         </div>
         <button type="submit">Login</button>
       </form>
-      <p class="switch-link" @click="switchToRegister">Don't have an account? Register</p>
+      <p class="switch-link" @click="switchToRegister">目前还没有账号？注册一个</p>
     </div>
 
     <div v-else class="form-container">
-      <h2>Register</h2>
+      <h2>注册</h2>
       <form @submit.prevent="handleRegister">
         <div class="form-group">
           <label for="register-name">Name:</label>
-          <input type="text" id="register-name" v-model="registerForm.name" required />
+          <input type="text" id="register-name" v-model="registerForm.nickname" required />
         </div>
         <div class="form-group">
           <label for="register-email">Email:</label>
-          <input type="email" id="register-email" v-model="registerForm.email" required />
+          <input type="email" id="register-email" v-model="registerForm.account" required />
         </div>
         <div class="form-group">
           <label for="register-password">Password:</label>
@@ -33,7 +33,7 @@
         </div>
         <button type="submit">Register</button>
       </form>
-      <p class="switch-link" @click="switchToLogin">Already have an account? Login</p>
+      <p class="switch-link" @click="switchToLogin">已经有账号了！登录</p>
     </div>
   </div>
 </template>
@@ -46,12 +46,12 @@ export default defineComponent({
     return {
       isLogin: true,
       loginForm: {
-        email: '',
+        account: '',
         password: '',
       },
       registerForm: {
-        name: '',
-        email: '',
+        nickname: '',
+        account: '',
         password: '',
       },
     }
@@ -60,16 +60,16 @@ export default defineComponent({
     handleLogin() {
       // 这里添加登录逻辑，例如调用 API
       console.log('Login form submitted:', this.loginForm)
-      // 示例：清空表单
-      this.loginForm.email = ''
-      this.loginForm.password = ''
+      if (this.loginForm.account == '123' && this.loginForm.password == '123') {
+        this.isLogin = false
+      }
     },
     handleRegister() {
       // 这里添加注册逻辑，例如调用 API
       console.log('Register form submitted:', this.registerForm)
       // 示例：清空表单
-      this.registerForm.name = ''
-      this.registerForm.email = ''
+      this.registerForm.nickname = ''
+      this.registerForm.account = ''
       this.registerForm.password = ''
     },
     switchToRegister() {
@@ -123,6 +123,10 @@ button {
 
 button:hover {
   background-color: #3aa57c;
+}
+
+.login {
+  text-align: center;
 }
 
 .switch-link {
