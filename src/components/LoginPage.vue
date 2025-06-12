@@ -1,9 +1,10 @@
 <template>
   <div class="auth-container">
     <div v-if="isLogin" class="form-container">
-      <h2 id="login">登录</h2>
+      <h2 class="login">登录</h2>
       <form @submit.prevent="handleLogin">
         <div class="form-group">
+          <img id="account-image" src="../assets/用户.png">
           <label for="login-account">Account:</label>
           <input type="text" id="login-account" v-model="loginForm.account" required />
         </div>
@@ -40,7 +41,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import  axios from 'axios'
+// import  axios from 'axios'
 export default defineComponent({
   data() {
     return {
@@ -61,14 +62,15 @@ export default defineComponent({
       // 这里添加登录逻辑，例如调用 API
       console.log('Login form submitted:', this.loginForm)
       try {
-        const response = await axios.post('http://localhost:8001/api/login', this.loginForm);
-        if (response.data) {
-          // 登录成功
-          localStorage.setItem('userInfo', JSON.stringify(this.loginForm.account));
+        // const response = await axios.post('http://localhost:8001/api/login', this.loginForm);
+        // if (response.data) {
+        //   // 登录成功
+        //   localStorage.setItem('userInfo', JSON.stringify(this.loginForm.account));
 
-          // 跳转到首页或其他页面
-          this.$router.push('/home'); //拿跳转到首页尝试
-        }
+        //   // 跳转到首页或其他页面
+        //   this.$router.push('/home'); //拿跳转到首页尝试
+        // }
+        this.$router.push('/home'); //拿跳转到首页尝试
       } catch (error) {
         console.error('Login failed:', error);
         // 可提示用户登录失败
@@ -94,19 +96,20 @@ export default defineComponent({
 
 <style scoped>
 .auth-container {
-  max-width: 400px;
+  max-width: 100%;
+  width: 70%;
   margin: 0 auto;
-  padding: 20px;
 }
 
 .form-container {
   background-color: #f9f9f9;
-  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
+  width: 60%;
+  margin-left: 40%;
   margin-bottom: 15px;
 }
 
@@ -136,7 +139,8 @@ button:hover {
 }
 
 .login {
-  text-align: center;
+  width: 100%;
+  justify-content: center; /* 水平居中 */
 }
 
 .switch-link {
