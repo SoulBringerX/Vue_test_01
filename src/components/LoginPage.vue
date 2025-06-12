@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-
+import  axios from 'axios'
 export default defineComponent({
   data() {
     return {
@@ -57,11 +57,21 @@ export default defineComponent({
     }
   },
   methods: {
-    handleLogin() {
+    async handleLogin() {
       // 这里添加登录逻辑，例如调用 API
       console.log('Login form submitted:', this.loginForm)
-      if (this.loginForm.account == '123' && this.loginForm.password == '123') {
-        this.isLogin = false
+      try {
+        const response = await axios.post('http://localhost:8001/api/login', this.loginForm);
+        if (response.data) {
+          // 登录成功
+          localStorage.setItem('userInfo', JSON.stringify(this.loginForm.account));
+
+          // 跳转到首页或其他页面
+          this.$router.push('/home'); //拿跳转到首页尝试
+        }
+      } catch (error) {
+        console.error('Login failed:', error);
+        // 可提示用户登录失败
       }
     },
     handleRegister() {
